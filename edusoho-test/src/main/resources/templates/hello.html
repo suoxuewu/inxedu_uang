@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap 实例 - 模态框（Modal）插件</title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <script src="/jquery.min.js"></script>
+    <script src="/bootstrap.min.js"></script>
+</head>
+<body>
+<div style="width:500px;">
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="firstname" class="col-sm-2 control-label">讲师名称</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="firstname" placeholder="请输入讲师名称">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">讲师资历</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="lastname" placeholder="请输入讲师资历">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">选择专业</label>
+            <div class="col-sm-10" style="width:230px">
+                <select class="form-control">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label for="lastname" class="col-sm-2 control-label">讲师等级</label>
+            <div class="col-sm-10" style="width:150px">
+                <select class="form-control">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">讲师简介</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">头像</label>
+            <div class="col-sm-10">
+                <label class="sr-only" >上传</label>
+                ：<input type="file" id="file" name="file"/></br>
+            </div>
+        </div>
+
+    </form>
+    <img  th:src="@{${fileName}}">
+</div>
+
+<hr>
+<script th:inline="javascript">
+
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/edusoho.iml" filepath="$PROJECT_DIR$/edusoho.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edusoho-bean/edusoho-bean.iml" filepath="$PROJECT_DIR$/edusoho-bean/edusoho-bean.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edusoho-common-util/edusoho-common-util.iml" filepath="$PROJECT_DIR$/edusoho-common-util/edusoho-common-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edusoho-interface/edusoho-interface.iml" filepath="$PROJECT_DIR$/edusoho-interface/edusoho-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edusoho-manager-service/edusoho-manager-service.iml" filepath="$PROJECT_DIR$/edusoho-manager-service/edusoho-manager-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edusoho-manager-web/edusoho-manager-web.iml" filepath="$PROJECT_DIR$/edusoho-manager-web/edusoho-manager-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edusoho-parent/edusoho-parent.iml" filepath="$PROJECT_DIR$/edusoho-parent/edusoho-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edusoho-service-util/edusoho-service-util.iml" filepath="$PROJECT_DIR$/edusoho-service-util/edusoho-service-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edusoho-test/edusoho-test.iml" filepath="$PROJECT_DIR$/edusoho-test/edusoho-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edusoho-web-util/edusoho-web-util.iml" filepath="$PROJECT_DIR$/edusoho-web-util/edusoho-web-util.iml" />
+    </modules>
+  </component>
+</project>

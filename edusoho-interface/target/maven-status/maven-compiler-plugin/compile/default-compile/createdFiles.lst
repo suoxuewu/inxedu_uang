@@ -1,0 +1,4 @@
+com\edusoho\service\CourseService.class
+com\edusoho\service\SysSubjectService.class
+com\edusoho\service\EduUserService.class
+com\edusoho\service\EduTeacherService.class

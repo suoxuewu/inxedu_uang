@@ -1,0 +1,15 @@
+
+
+
+
+
+person1:
+  age: 12
+  sex: 0
+  maps:
+    name: xiaohua
+    age: 100
+  list:
+    - 1
+    - 2
+    - 3

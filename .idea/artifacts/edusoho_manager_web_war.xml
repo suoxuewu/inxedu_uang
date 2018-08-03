@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="edusoho-manager-web:war">
+    <output-path>$PROJECT_DIR$/edusoho-manager-web/target</output-path>
+    <root id="archive" name="edusoho-manager-web-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="edusoho-manager-web:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="style/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style/css/main.css">
+    <style>
+        .tree li {
+            list-style-type: none;
+            cursor: pointer;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background: #F4F4F4;
+        }
+
+        table tbody td:nth-child(even) {
+            color: #C00;
+        }
+
+        .demo-input {
+            font-size: 12px;
+            padding-left: 10px;
+            height: 36px;
+            min-width: 85px;
+            line-height: 36px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .demo-footer a {
+            padding: 0 5px;
+            color: #01AAED;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div><a class="navbar-brand" style="font-size:32px;" href="#">XXXX - 教师维护</a></div>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <div class="tree">
+                <ul style="padding-left:0px;" class="list-group">
+                    <li class="list-group-item tree-closed">
+                        <a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 学员管理 <span class="badge"
+                                                                                             style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/user"><i class="glyphicon glyphicon-user"></i> 学员列表</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 教师管理 <span class="badge" style="float:right">2</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/teacher"><i class="glyphicon glyphicon-user"></i> 教师列表</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="/addTeacher"><i class="glyphicon glyphicon-user"></i> 添加列表</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 专业管理 <span class="badge" style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/subject"><i class="glyphicon glyphicon-user"></i> 专业列表</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 课程管理 <span class="badge" style="float:right">2</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/eduCourse"><i class="glyphicon glyphicon-user"></i> 课程列表</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="/addCourse"><i class="glyphicon glyphicon-user"></i> 课程添加</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 添加讲师</h3>
+                </div>
+                <div class="panel-body">
+
+                    <hr style="clear:both;">
+                    <div class="table-responsive" >
+                        <form class="form-horizontal" role="form" style="width: 700px;" action="saveEduTeacher" method="post" th:object="${eduTeacher}">
+                            <div class="form-group">
+                                <label for="firstname" class="col-sm-2 control-label">讲师名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="firstname" th:name="name" placeholder="请输入讲师名称">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-2 control-label">讲师资历</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="lastname" th:name="education" placeholder="请输入讲师资历">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-2 control-label">选择专业</label>
+                                <div class="col-sm-10" style="width:250px">
+                                    <select class="form-control" th:name="subjectId">
+                                        <option th:value="${allSysSubject.subjectId}" th:text="${allSysSubject.subjectName}"  th:each="allSysSubject:${allSysSubjectList}" >1</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" >
+                                <label for="lastname" class="col-sm-2 control-label">讲师等级</label>
+                                <div class="col-sm-10" style="width:200px">
+                                    <select class="form-control" th:name="isStar">
+                                        <option th:value="1">高级讲师</option>
+                                        <option th:value="2">首席讲师</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-2 control-label">讲师排序</label>
+                                <div class="col-sm-10"  style="width:200px">
+                                    <input type="text" class="form-control" id="sort" th:name="sort" placeholder="" th:value="0">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-2 control-label">讲师简介</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="3" th:name="career"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-sm-2 control-label">头像</label>
+                                <div class="col-lg-2">
+                                    <img th:src="@{${filePath}}" style="width: 200px;height: 200px;"  id="showImage">
+                                    <input type="hidden" th:name="picPath" th:value="${filePath}" id="imagePath">
+                                </div>
+                                 <div class="col-lg-3" style="margin-left: 120px;margin-top: 100px;">
+                                      <label class="sr-only" >上传:</label>
+                                     <input type="file" id="file" name="file"/></br>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10" style="text-align: right">
+                                    <button type="submit" class="btn btn-default">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<
+<script src="style/jquery/jquery-2.1.1.min.js"></script>
+<script src="style/bootstrap/js/bootstrap.min.js"></script>
+<script src="style/script/docs.min.js"></script>
+<script src="/laydate/laydate.js"></script>
+<script src="style/bootstrap/js/bootstrap-paginator.min.js"></script>
+
+<script type="text/javascript">
+    $("#file").change(function() {
+        var fileM = document.querySelector("#file");
+        var fileObj = fileM.files[0];
+        var formData = new FormData();
+        formData.append("picImage", fileObj);
+        $.ajax({
+            url: 'uploadPicImage',
+            type: 'POST',
+            contentType: false, //禁止设置请求类型
+            processData: false,
+            data: formData,
+            enctype: "multipart/form-data",
+            success: function (result) {
+                var data = eval("("+result+")");
+                 $("#showImage").attr("src",data.filePath);
+                 $("#imagePath").val(data.filePath);
+            }
+        });
+    });
+    $(function () {
+        $(function () {
+            $(".list-group-item").click(function(){
+                if ( $(this).find("ul") ) {
+                    $(this).toggleClass("tree-closed");
+                    if ( $(this).hasClass("tree-closed") ) {
+                        $("ul", this).hide("fast");
+                    } else {
+                        $("ul", this).show("fast");
+                    }
+                }
+            });
+        });
+    });
+
+
+</script>
+
+
+</body>
+</html>

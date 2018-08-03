@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="style/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style/css/main.css">
+    <style>
+        .tree li {
+            list-style-type: none;
+            cursor: pointer;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background: #F4F4F4;
+        }
+
+        table tbody td:nth-child(even) {
+            color: #C00;
+        }
+
+        .demo-input {
+            font-size: 12px;
+            padding-left: 10px;
+            height: 36px;
+            min-width: 85px;
+            line-height: 36px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .demo-footer a {
+            padding: 0 5px;
+            color: #01AAED;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div><a class="navbar-brand" style="font-size:32px;" href="#">XXXX - 教师维护</a></div>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <div class="tree">
+                <ul style="padding-left:0px;" class="list-group">
+                    <li class="list-group-item tree-closed">
+                        <a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 学员管理 <span class="badge"
+                                                                                             style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/user"><i class="glyphicon glyphicon-user"></i> 学员列表</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 教师管理 <span class="badge" style="float:right">2</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/teacher"><i class="glyphicon glyphicon-user"></i> 教师列表</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="/addTeacher"><i class="glyphicon glyphicon-user"></i> 添加列表</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 专业管理 <span class="badge" style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/subject"><i class="glyphicon glyphicon-user"></i> 专业列表</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 课程管理 <span class="badge" style="float:right">2</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/eduCourse"><i class="glyphicon glyphicon-user"></i> 课程列表</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="/addCourse"><i class="glyphicon glyphicon-user"></i> 课程添加</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 课程列表</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-inline" role="form" style="float:left;">
+                        <div class="form-group has-feedback">
+                            <div class="input-group">
+                                <!--  <div class="input-group-addon">查询条件</div>-->
+                                <input class="form-control has-success" style="width: 115px;font-size: 12px;"
+                                       type="text" placeholder="课程名称" id="courseName">
+                            </div>
+                            <label style="font-size: 12px;">状态:</label>
+                            <select class="form-control" id="isAvaliableCourse" style="width: 95px;font-size: 12px;padding-right:20px;">
+                                <option th:value="9">请选择</option>
+                                <option th:value="1">正常</option>
+                                <option th:value="2">下架</option>
+                                <option th:value="3">删除</option>
+                            </select>
+
+                            <select class="form-control" id="subjectIdCourse" style="width: 120px;font-size: 12px;padding-right:20px">
+                                <option th:value="99999999">请选择专业</option>
+                                <option th:value="${sysSubject.subjectId}" th:text="${sysSubject.subjectName}"  th:each="sysSubject:${sysSubjectList}">正常</option>
+                            </select>
+                            <input type="text" class="demo-input" placeholder="开始注册时间" id="startDateTime" style="width:140px">
+                            <input type="text" class="demo-input" placeholder="结束注册时间" id="endDateTime" style="width:140px">
+                        </div>
+
+
+                    </form>
+                    <button type="button" class="btn btn-default" th:onclick="'javascript:findCourse()'" style="padding-left:4px;padding-right:5px;"><i class="glyphicon glyphicon-search"></i>查找课程
+                    </button>
+                    <button type="button" class="btn btn-default"  th:onclick="'javascript:clearTerm()'" style="padding-left:4px;padding-right:5px;"><i class="glyphicon glyphicon-minus-sign"></i>清空
+                    </button>
+                    <button type="button" class="btn btn-default" style="padding-left:4px;padding-right:5px;" th:onclick="'javascript:window.location.href=\''+addCourse+'\''"><i class="glyphicon glyphicon-globe"></i> 创建课程
+                    </button>
+                    <br>
+                    <hr style="clear:both;">
+                    <div class="table-responsive">
+                        <table class="table  table-bordered" style="text-align: center">
+                            <thead>
+                            <tr class="text-center">
+                                <th></th>
+                                <th class="text-center" style="width:10%">课程名</th>
+                                <th class="text-center">状态</th>
+                                <th class="text-center">专业</th>
+                                <th class="text-center">原价</th>
+                                <th class="text-center">优惠价</th>
+                                <th class="text-center">课时</th>
+                                <th class="text-center">销售量</th>
+                                <th class="text-center">浏览量</th>
+                                <th class="text-center">创建时间</th>
+                                <th class="text-center">有效结束时间</th>
+                                <th class="text-center" width="160px"  >操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="12" align="center">
+
+                                    <div id="example" style="text-align: center"> <ul id="pageLimit"></ul> </div>
+
+                                </td>
+                            </tr>
+
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<
+<script src="style/jquery/jquery-2.1.1.min.js"></script>
+<script src="style/bootstrap/js/bootstrap.min.js"></script>
+<script src="style/script/docs.min.js"></script>
+<script src="/laydate/laydate.js"></script>
+<script src="style/bootstrap/js/bootstrap-paginator.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $(function () {
+            $(".list-group-item").click(function(){
+                if ( $(this).find("ul") ) {
+                    $(this).toggleClass("tree-closed");
+                    if ( $(this).hasClass("tree-closed") ) {
+                        $("ul", this).hide("fast");
+                    } else {
+                        $("ul", this).show("fast");
+                    }
+                }
+            });
+        });
+        getPage(1,{});
+    });
+
+</script>
+<script>
+    function getPage(pageNum,termParams) {
+        termParams['pageNum'] = pageNum;
+        termParams['pageSize'] = 5;
+        $.ajax({
+            url:'getCoursePage',
+            type:'post',
+            data:termParams,
+            success:function (result) {
+                var result = eval("("+result+")");
+                var rows =  result.eduCourseList;
+                var sysSubjects = result.sysSubjectList;
+                console.log(rows);
+                var str = "";
+                for (var i = 0;i < rows.length;i++){
+                    str+='<tr>';
+                    str+='<td><input type="hidden" id="userId" value="'+rows[i].courseId+'"></td>';
+                    str+='<td style="vertical-align: middle;">'+rows[i].courseName+'</td>';
+                    if(rows[i].isAvaliable == 1){
+                        str+='<td style="vertical-align: middle;">正常</td>';
+                    }else if(rows[i].isAvaliable ==2){
+                        str+='<td style="vertical-align: middle;">下架</td>';
+                    }else{
+                        str+='<td style="vertical-align: middle;">删除</td>';
+                    }
+                    //字符串转换成整数
+                   var subjectId =  parseInt(rows[i].subjectId);
+                    for(var j = 0;j < sysSubjects.length;j++){
+
+                          if(sysSubjects[j].subjectId == subjectId){
+                              str+='<td style="vertical-align: middle;">'+sysSubjects[j].subjectName+'</td>';
+                              break;
+                          }
+                     }
+                    str+='<td style="vertical-align: middle;">'+rows[i].sourcePrice+'</td>';
+                    //优惠价
+                    str+='<td style="vertical-align: middle;">'+rows[i].currentPrice+'</td>';
+                    //课时
+                    str+='<td style="vertical-align: middle;">'+rows[i].lessionNum+'</td>';
+                    //销售量
+                    str+='<td style="vertical-align: middle;">'+rows[i].pageBuycount+'</td>';
+                    //浏览量
+                    str+='<td style="vertical-align: middle;">'+rows[i].pageViewcount+'</td>';
+                    //创建时间
+                    str+='<td style="vertical-align: middle;">'+format(rows[i].addTime)+'</td>';
+                    //有效结束时间
+                    if(isNaN(rows[i].endTime)){
+                        str+='<td style="vertical-align: middle;">----</td>';
+                    }else{
+                        str+='<td style="vertical-align: middle;">'+format(rows[i].endTime)+'</td>';
+
+                    }
+                     str+='<td style="vertical-align: middle;">';
+                    str+='<button type="button" class="btn btn-default " data-toggle="modal" data-target="#myModal" onclick="saveUserId('+rows[i].userId+')" style="padding-left: 3px;padding-right: 3px;"> 章节管理</button>';
+                    str+='<button type="button" class="btn btn-default " data-toggle="modal" data-target="#myModal"  onclick="getCourseInfoById('+rows[i].courseId+')"   style="padding-left:3px;padding-right:3px;"> 修改</button>';
+
+                    str+='<button type="button" class="btn btn-default " data-toggle="modal" data-target="#myModal" onclick="deleteCourseInfo('+rows[i].courseId+')" style="padding-left: 3px;padding-right: 3px;" > 删除</button>';
+                    str+='</td>';
+                    str+='</tr>';
+                }
+                $("tbody").html(str);
+                $('#pageLimit').bootstrapPaginator({
+                    currentPage: result.pageNum,//当前的请求页面。
+                    totalPages: result.totalPageCount,//一共多少页。
+                    size: "normal",//应该是页眉的大小。
+                    bootstrapMajorVersion: 3,//bootstrap的版本要求。
+                    alignment: "right",
+                    numberOfPages: 5,//一页列出多少数据。
+                    itemTexts: function (type, page, current) {//如下的代码是将页眉显示的中文显示我们自定义的中文。
+                        switch (type) {
+                            case "first":
+                                return "首页";
+                            case "prev":
+                                return "上一页";
+                            case "next":
+                                return "下一页";
+                            case "last":
+                                return "末页";
+                            case "page":
+                                return page;
+                        }
+                    },
+                    onPageClicked: function (event, originalEvent, type, page){//给每个页眉绑定一个事件，其实就是ajax请求，其中page变量为当前点击的页上的数字。
+                        var termParams = term();
+                        getPage(page,termParams);
+                    }
+                });
+            }
+        });
+    }
+    //将时间戳格式化成日期
+    function format(str){
+        var unixTimestamp = new Date(str) ;
+        var commonTime = unixTimestamp.toLocaleString();
+        return commonTime;
+    };
+    Date.prototype.toLocaleString = function() {
+        return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
+    };
+    /*开始注册时间*/
+    laydate.render({
+        elem: '#startDateTime'
+        , type: 'datetime'
+    });
+    /*结束注册时间*/
+    laydate.render({
+        elem: '#endDateTime'
+        , type: 'datetime'
+    });
+    //查找课程
+    function findCourse(){
+        var termParams = term();
+        console.log(JSON.stringify(termParams));
+        getPage(1,termParams);
+    }
+    //将查询条件封装成JSON对象
+    function term() {
+
+        //获取课程名称
+        var courseName =  $("#courseName").val();
+        //获取选中的状态
+        var isAvaliable = $("#isAvaliableCourse  option:selected").val();
+
+        //获取选中的专业
+        var subjectId = $("#subjectIdCourse  option:selected").val();
+
+        //获取注册时间
+        var startDateTime = $("#startDateTime").val();
+        //获取结束注册时间
+        var endDateTime = $("#endDateTime").val();
+
+
+        var termParams = {};
+        courseName = $.trim(courseName);
+        if(courseName != null && courseName.length >0){
+            termParams['courseName'] = courseName;
+        }else{
+            termParams['courseName'] = "";
+        }
+
+       termParams['isAvaliable'] = isAvaliable;
+        termParams['subjectId'] = subjectId;
+        termParams['startDateTime'] = startDateTime;
+        termParams['endDateTime'] = endDateTime;
+        return termParams;
+    }
+    //清空条件选择框
+    function clearTerm() {
+        //清空
+          $("#courseName").val("");
+        //清空选中的状态
+         $("#isAvaliableCourse option:first").prop("selected", 'selected');
+
+        //清空选中的专业
+        $("#subjectIdCourse option:first").prop("selected", 'selected');
+        //清空注册时间
+        $("#startDateTime").val("");
+        //清空结束注册时间
+        $("#endDateTime").val("");
+
+    }
+    function getCourseInfoById(courseId) {
+         window.location.href="addCourse?courseId="+courseId;
+    }
+    function deleteCourseInfo(courseId) {
+        $.ajax({
+            url:'deleteCourseInfo?courseId='+courseId,
+            type:'GET',
+            success:function (result) {
+                var data = eval("("+result+")");
+                if(data.flag == true){
+                    var termParams = term();
+                    getPage(1,termParams);
+                }else{
+                    layer.msg("删除失败!",{time:200,icon:5,shift:6});
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

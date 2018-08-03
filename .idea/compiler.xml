@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="edusoho-bean" />
+        <module name="edusoho-common-util" />
+        <module name="edusoho-interface" />
+        <module name="edusoho-manager-service" />
+        <module name="edusoho-manager-web" />
+        <module name="edusoho-service-util" />
+        <module name="edusoho-test" />
+        <module name="edusoho-web-util" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="edusoho-bean" target="1.8" />
+      <module name="edusoho-common" target="1.8" />
+      <module name="edusoho-common-util" target="1.8" />
+      <module name="edusoho-interface" target="1.8" />
+      <module name="edusoho-manager-service" target="1.5" />
+      <module name="edusoho-manager-web" target="1.5" />
+      <module name="edusoho-parent" target="1.8" />
+      <module name="edusoho-service-util" target="1.8" />
+      <module name="edusoho-test" target="1.8" />
+      <module name="edusoho-web-util" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

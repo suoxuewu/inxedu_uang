@@ -1,0 +1,8 @@
+com\edusoho\bean\EduTeacher.class
+com\edusoho\bean\EduCourse.class
+com\edusoho\vo\TermCourse.class
+com\edusoho\bean\EduUser.class
+com\edusoho\bean\SysSubject.class
+com\edusoho\bean\EduCourseTeacher.class
+com\edusoho\vo\Term.class
+com\edusoho\vo\TermTeacher.class

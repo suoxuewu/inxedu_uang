@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="style/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style/css/main.css">
+    <style>
+        .tree li {
+            list-style-type: none;
+            cursor: pointer;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background: #F4F4F4;
+        }
+
+        table tbody td:nth-child(even) {
+            color: #C00;
+        }
+
+        .demo-input {
+            font-size: 12px;
+            padding-left: 10px;
+            height: 36px;
+            min-width: 85px;
+            line-height: 36px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .demo-footer a {
+            padding: 0 5px;
+            color: #01AAED;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div><a class="navbar-brand" style="font-size:32px;" href="#">XXXX - 教师维护</a></div>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <div class="tree">
+                <ul style="padding-left:0px;" class="list-group">
+                    <li class="list-group-item tree-closed">
+                        <a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 学员管理 <span class="badge"
+                                                                                             style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/user"><i class="glyphicon glyphicon-user"></i> 学员列表</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 教师管理 <span class="badge" style="float:right">2</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/teacher"><i class="glyphicon glyphicon-user"></i> 教师列表</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="/addTeacher"><i class="glyphicon glyphicon-user"></i> 添加列表</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 专业管理 <span class="badge" style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/subject"><i class="glyphicon glyphicon-user"></i> 专业列表</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 课程管理 <span class="badge" style="float:right">2</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/eduCourse"><i class="glyphicon glyphicon-user"></i> 课程列表</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="/addCourse"><i class="glyphicon glyphicon-user"></i> 课程添加</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 教师列表</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-inline" role="form" style="float:left;">
+                        <div class="form-group has-feedback">
+                            <div class="input-group">
+                                 <div class="input-group-addon">讲师名称:</div>
+                                <input class="form-control has-success" style="width: 130px;font-size: 12px;"
+                                       type="text" placeholder="讲师名" id="term">
+                            </div>
+                            <select class="form-control" id="isStar" style="width: 150px;font-size: 12px;">
+                                <option th:value="999999">请选择</option>
+                                <option th:value="1">高级讲师</option>
+                                <option th:value="2">首席讲师</option>
+                            </select>
+                            <input type="text" class="demo-input" placeholder="开始注册时间" id="startDateTime">
+                            <input type="text" class="demo-input" placeholder="结束注册时间" id="endDateTime">
+                        </div>
+
+
+                    </form>
+                    <button type="button" class="btn btn-default" th:onclick="'javascript:findUser()'"><i class="glyphicon glyphicon-search"></i>查找
+                    </button>
+                    <button type="button" class="btn btn-default"  th:onclick="'javascript:clearTerm()'"><i class="glyphicon glyphicon-minus-sign"></i>清空
+                    </button>
+                    <br>
+                    <hr style="clear:both;">
+                    <div class="table-responsive">
+                        <table class="table  table-bordered" style="table-layout:fixed;text-align:center" >
+                            <thead>
+                            <tr>
+                                <th width="3%">ID</th>
+                                <th width="7%" style="text-align:center">名称</th>
+                                <th width="10%" style="text-align:center">头衔</th>
+                                <th width="18%" style="text-align:center">简历</th>
+                                <th width="27%" style="text-align:center">简介</th>
+                                <th width="16%" style="text-align:center">添加时间</th>
+                                <th width="5%" style="text-align:center">排序</th>
+                                <th width="14%" style="text-align:center">操作</th>
+                             </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="11" align="center">
+
+                                    <div id="example" style="text-align: center"> <ul id="pageLimit"></ul> </div>
+
+                                </td>
+                            </tr>
+
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal"   tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" style="width:650px;">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    修改教师信息
+                </h4>
+            </div>
+            <br>
+             <div class="table-responsive"  >
+                <form class="form-horizontal" role="form" style="width: 600px;" method="post" th:object="${eduTeacher}">
+                    <input type="hidden"   id="teacherId" th:name="id" >
+                    <div class="form-group"  >
+                        <label for="nameTeacher" class="col-sm-2 control-label">讲师名称</label>
+                        <div class="col-sm-10" style="width: 400px;">
+                            <input type="text" class="form-control" id="nameTeacher" th:name="name" placeholder="请输入讲师名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="educationTeacher" class="col-sm-2 control-label">讲师资历</label>
+                        <div class="col-sm-10" style="width: 400px;">
+                            <input type="text" class="form-control" id="educationTeacher" th:name="education" placeholder="请输入讲师资历">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="subjectIdTeacher" class="col-sm-2 control-label">选择专业</label>
+                        <div class="col-sm-10" style="width:250px">
+                            <select class="form-control" th:name="subjectId" id="subjectIdTeacher">
+                                <option th:value="${allSysSubject.subjectId}" th:text="${allSysSubject.subjectName}"  th:each="allSysSubject:${allSysSubjectList}" >1</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label for="isStarTeacher" class="col-sm-2 control-label">讲师等级</label>
+                        <div class="col-sm-10" style="width:200px">
+                            <select class="form-control" th:name="isStar" id="isStarTeacher">
+                                <option th:value="1">高级讲师</option>
+                                <option th:value="2">首席讲师</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sortTeacher" class="col-sm-2 control-label">讲师排序</label>
+                        <div class="col-sm-10"  style="width:200px">
+                            <input type="text" class="form-control" id="sortTeacher" th:name="sort" placeholder="" th:value="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="careerTeacher" class="col-sm-2 control-label">讲师简介</label>
+                        <div class="col-sm-10" style="width: 400px;">
+                            <textarea class="form-control" rows="3" th:name="career" id="careerTeacher"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label for="imagePath" class="col-sm-2 control-label">头像</label>
+                        <div class="col-lg-2" style="width: 250px;height:200px">
+                            <img th:src="@{${filePath}}" style="width: 200px;height: 180px;"  id="showImage">
+                            <input type="hidden" th:name="picPath" th:value="${filePath}" id="imagePath">
+                        </div>
+                        <div class="col-lg-3" style="margin-left: 10px;margin-top: 100px;">
+                            <label class="sr-only" >上传:</label>
+                            <input type="file" id="file" name="file"/></br>
+                        </div>
+                    </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                        </button>
+                        <button type="button" class="btn btn-primary"  th:onclick="'javascript:updateTeacherInfo()'">
+                            确定
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal
+    </div><!-- /.modal -->
+</div>
+<script src="style/jquery/jquery-2.1.1.min.js"></script>
+<script src="style/bootstrap/js/bootstrap.min.js"></script>
+<script src="style/script/docs.min.js"></script>
+<script src="/laydate/laydate.js"></script>
+<script src="style/bootstrap/js/bootstrap-paginator.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $(function () {
+            $(".list-group-item").click(function(){
+                if ( $(this).find("ul") ) {
+                    $(this).toggleClass("tree-closed");
+                    if ( $(this).hasClass("tree-closed") ) {
+                        $("ul", this).hide("fast");
+                    } else {
+                        $("ul", this).show("fast");
+                    }
+                }
+            });
+        });
+        getPage(1,{});
+    });
+    function getPage(pageNum,termParams) {
+        termParams['pageNum'] = pageNum;
+        termParams['pageSize'] = 5;
+        $.ajax({
+            url:'getTeacherPage',
+            type:'post',
+            data:termParams,
+            success:function (result) {
+                var result = eval("("+result+")");
+                var rows =  result.eduUsers;
+                console.log(rows);
+                var str = "";
+                for (var i = 0;i < rows.length;i++){
+                    str+='<tr>';
+                    str+='<td style="vertical-align: middle;">'+rows[i].id+'</td>';
+                    str+='<td style="vertical-align: middle;">'+rows[i].name+'</td>';
+                    if(rows[i].isStar == 1){
+                        str+='<td style="vertical-align: middle;">高级讲师</td>';
+                    }else{
+                        str+='<td style="vertical-align: middle;">首席讲师</td>';
+                    }
+                    str+='<td style="vertical-align: middle;">'+rows[i].education+'</td>';
+                    str+='<td style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align: middle;">'+rows[i].career+'</td>';
+                    str+='<td style="vertical-align: middle;">'+format(rows[i].createTime)+'</td>';
+                    str+='<td style="vertical-align: middle;">'+rows[i].sort+'</td>';
+                    str+='<td style="vertical-align: middle;">';
+                    str+='<button type="button" class="btn btn-default " data-toggle="modal" data-target="#myModal" onclick="updateEduTeacher('+rows[i].id+')" > 修改</button>';
+                    str+='<button  type="button"   class="btn btn-default" onclick="deleteEduTeacher('+rows[i].id+')">删除</button>';
+
+
+                    str+='</td>';
+                    str+='</tr>';
+                }
+                $("tbody").html(str);
+                $('#pageLimit').bootstrapPaginator({
+                    currentPage: result.pageNum,//当前的请求页面。
+                    totalPages: result.totalPageCount,//一共多少页。
+                    size: "normal",//应该是页眉的大小。
+                    bootstrapMajorVersion: 3,//bootstrap的版本要求。
+                    alignment: "right",
+                    numberOfPages: 5,//一页列出多少数据。
+                    itemTexts: function (type, page, current) {//如下的代码是将页眉显示的中文显示我们自定义的中文。
+                        switch (type) {
+                            case "first":
+                                return "首页";
+                            case "prev":
+                                return "上一页";
+                            case "next":
+                                return "下一页";
+                            case "last":
+                                return "末页";
+                            case "page":
+                                return page;
+                        }
+                    },
+                    onPageClicked: function (event, originalEvent, type, page){//给每个页眉绑定一个事件，其实就是ajax请求，其中page变量为当前点击的页上的数字。
+                        var termParams = term();
+                        getPage(page,termParams);
+                    }
+                });
+            }
+        });
+    }
+    //将时间戳格式化成日期
+    function format(str){
+        var unixTimestamp = new Date(str) ;
+        var commonTime = unixTimestamp.toLocaleString();
+        return commonTime;
+    };
+    Date.prototype.toLocaleString = function() {
+        return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
+    };
+</script>
+
+
+<script>
+    /*开始注册时间*/
+    laydate.render({
+        elem: '#startDateTime'
+        , type: 'datetime'
+    });
+    /*结束注册时间*/
+    laydate.render({
+        elem: '#endDateTime'
+        , type: 'datetime'
+    });
+
+
+    function deleteEduTeacher(teacherId){
+        $.ajax({
+            url:'deleteTeacherInfo',
+            type:'POST',
+            data:{id:teacherId},
+            success:function (result) {
+                var result = eval("("+result+")");
+                if(result.flag == true){
+                    var termParams = term();
+                    getPage(1,termParams);
+                    alert("删除成功!");
+                }else{
+                    alert("更新失败!");
+                }
+            }
+        });
+        alert(teacherId);
+    }
+
+    //查找学员
+    function findUser(){
+        var termParams = term();
+       getPage(1,termParams);
+    }
+    //将查询条件封装成JSON对象
+    function term() {
+
+        //获取讲师名
+        var name =  $("#term").val();
+        //获取选中的头衔
+        var isStar = $("#isStar  option:selected").val();
+        //获取注册时间
+        var startDateTime = $("#startDateTime").val();
+        //获取结束注册时间
+        var endDateTime = $("#endDateTime").val();
+
+        //此处的正则表达式判断规则应该为  用户注册时的判断规则
+
+        //判断是否符合姓名 规则  有汉字和英文组成  2-6位
+        var userName =  /^[\u4e00-\u9fa5]{2,6}$/;
+
+         var termParams = {};
+        if(userName.test(name)){
+            termParams['name'] = $.trim(name);
+        }else{
+            termParams['name'] = "";
+        }
+
+        termParams['isStar'] = isStar;
+        termParams['startDateTime'] = startDateTime;
+        termParams['endDateTime'] = endDateTime;
+        return termParams;
+    }
+    function clearTerm() {
+        //清空
+        var term =  $("#term").val("");
+        //选中第一个选项
+        $("#isStar option:first").prop("selected", 'selected');
+        //清空
+        var startDateTime = $("#startDateTime").val("");
+        //清空
+        var endtDateTime = $("#endDateTime").val("");
+    }
+    $("#file").change(function() {
+        var fileM = document.querySelector("#file");
+        var fileObj = fileM.files[0];
+        var formData = new FormData();
+        formData.append("picImage", fileObj);
+        $.ajax({
+            url: 'uploadPicImage',
+            type: 'POST',
+            contentType: false, //禁止设置请求类型
+            processData: false,
+            data: formData,
+            enctype: "multipart/form-data",
+            success: function (result) {
+                var data = eval("("+result+")");
+                $("#showImage").attr("src",data.filePath);
+                $("#imagePath").val(data.filePath);
+            }
+        });
+    });
+    //点击修改按钮时
+    function updateEduTeacher(id){
+         $.ajax({
+            url:'getEduTeacherInfoById',
+            type:'POST',
+            data:{'id':id},
+            success:function (result) {
+                var data = eval("("+result+")");
+                var teacher = data.teacher;
+                $("#teacherId").val(teacher.id);
+                //设置讲师名称
+                $("#nameTeacher").val(teacher.name);
+                //设置讲师资历
+                $("#educationTeacher").val(teacher.education);
+                //设置排序值
+                $("#sortTeacher").val(teacher.sort);
+                //设置讲师简介
+                $("#careerTeacher").val(teacher.career);
+                //设置头像
+                $("#showImage").attr("src",teacher.picPath);
+
+                $("#imagePath").val(teacher.picPath);
+                //设置选择的专业
+                $("#subjectIdTeacher").val(teacher.subjectId);
+            }
+
+        });
+
+    }
+    //对信息进行修改后,点击确定
+    function updateTeacherInfo() {
+        //用户ID
+        var id = $("#teacherId").val();
+        //教师名称
+        var name = $("#nameTeacher").val();
+        //获取教师资历
+        var education = $("#educationTeacher").val();
+        //获取排序值
+       var sort = $("#sortTeacher").val();
+        //获取讲师简介
+       var  career = $("#careerTeacher").val();
+       //获取头像路径
+        var picPath = $("#imagePath").val();
+        //获取选择的专业id
+       var subjectId = $("#subjectIdTeacher").val();
+        var eduTeacher ={
+            id:id,
+            name:name,
+            education:education,
+            sort:sort,
+            career:career,
+            picPath:picPath,
+            subjectId:subjectId
+     };
+      $.ajax({
+          url:'updateEduTeacherInfo',
+          type:'POST',
+          data:eduTeacher,
+          success:function (result) {
+              var result = eval("("+result+")");
+              if(result.flag == true){
+                  //关闭模态框
+                  $("#myModal").modal('hide');
+              }else{
+                  alert("更新失败!");
+              }
+
+          }
+      });
+    }
+</script>
+</body>
+</html>

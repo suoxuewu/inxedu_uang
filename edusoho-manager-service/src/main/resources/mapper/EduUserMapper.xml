@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shadow.edusoho.manager.mapper.EduUserMapper">
+    <resultMap id="myEduUser" type="com.edusoho.bean.EduUser">
+        <id column="userId" property="user_id"></id>
+        <result column="mobile" property="mobile"></result>
+        <result column="email" property="email"></result>
+        <result column="password" property="password"></result>
+        <result column="userName" property="user_name"></result>
+        <result column="showName" property="show_name"></result>
+        <result column="sex" property="sex"></result>
+        <result column="age" property="age"></result>
+        <result column="createTime" property="create_time"></result>
+        <result column="isAvalible" property="is_avalible"></result>
+        <result column="picImg" property="pic_img"></result>
+        <result column="bannerUrl" property="banner_url"></result>
+        <result column="msgNum" property="msg_num"></result>
+        <result column="sysMsgNum" property="sys_msg_num"></result>
+        <result column="lastSystemTime" property="last_system_time"></result>
+    </resultMap>
+    <!--    List<EduUser> userDefinedGetAllEduUser(); -->
+    <select id="userDefinedGetAllEduUser" resultMap="myEduUser">
+        select user_id,mobile,email,password,user_name,show_name,sex,age,create_time,is_avalible,pic_img,banner_url,msg_num,sys_msg_num,last_system_time
+        from edu_user;
+    </select>
+    <!-- Boolean batchSaveEduUserInfo(@Param("eduUsers")List<EduUser> eduUsers); -->
+    <insert id="batchSaveEduUserInfo">
+        INSERT INTO MOBILE,EMAIL,PASSWORD,USER_NAME,SHOW_NAME,SEX,AGE,CREATE_TIME,IS_AVALIBLE,PIC_IMG,BANNER_URL,MSG_NUM,SYS_MSG_NUM,LAST_SYSTEM_TIME
+        VALUES
+        <foreach collection="eduUsers" item="eduUser" separator=",">
+            (#{eduUser.mobile},#{eduUser.email},#{eduUser.password},#{eduUser.userName},#{eduUser.showName},#{eduUser.sex},#{eduUser.age},#{eduUser.createTime},#{eduUser.isAvalible},#{eduUser.picImg},#{eduUser.bannerUrl},#{eduUser.msgNum},#{eduUser.sysMsgNum},#{eduUser.lastSystemTime})
+        </foreach>
+    </insert>
+</mapper>

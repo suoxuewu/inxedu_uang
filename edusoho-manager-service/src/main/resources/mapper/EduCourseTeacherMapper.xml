@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shadow.edusoho.manager.mapper.EduCourseTeacherMapper">
+
+    <!--  saveTeacherAndCourse(@Param("courseId") Integer courseId,@Param("teachers") List<Integer> teachers); -->
+    <insert id="saveTeacherAndCourse">
+        insert into edu_course_teacher(course_id,teacher_id) VALUES
+        <foreach collection="teachers" item="teacherId" separator=",">
+            (#{courseId},#{teacherId})
+        </foreach>
+    </insert>
+    <!--  deleteTeacherAndCourse(@Param("courseId") Integer courseId,@Param("teachers") List<Integer> teachers); --><!--saveTeacherAndCourse(@Param("courseId") Integer courseId,@Param("teachers") List<Integer> teachers); -->
+    <delete id="deleteTeacherAndCourse">
+        DELETE  from edu_course_teacher where course_id= #{courseId} and teacher_id in
+        <foreach collection="teachers" item="teacherId"  open="(" separator="," close=")">
+          #{teacherId}
+        </foreach>
+    </delete>
+
+</mapper>
